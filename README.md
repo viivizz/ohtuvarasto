@@ -1,3 +1,3 @@
 # ohutvarasto
 
-![CI](https://github.com/viivizz/ohutvarasto/actions/workflows/main.yml/badge.svg
+[![CI](https://github.com/viivizz/ohutvarasto/actions/workflows/main.yml/badge.svg)](https://github.com/viivizz/ohutvarasto/actions)
