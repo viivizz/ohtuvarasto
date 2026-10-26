@@ -1,5 +1,6 @@
 """Varaston käyttömalli."""
 
+
 from varasto import Varasto
 
 
