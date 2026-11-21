@@ -1,5 +1,7 @@
 """Simple Flask web interface for managing warehouses."""
 
+import os
+import secrets
 from importlib import import_module
 
 from flask import Flask, flash, redirect, render_template, request, url_for
@@ -13,7 +15,7 @@ except ModuleNotFoundError:
 
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "development-only"
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY") or secrets.token_hex(32)
 
 warehouses = {}
 

@@ -1,6 +1,9 @@
 """Tests for the Flask warehouse interface."""
 
+import importlib
+import os
 import unittest
+from unittest.mock import patch
 
 import app
 
@@ -41,6 +44,13 @@ class TestWarehouseWebInterface(unittest.TestCase):
             b"Maximum capacity must be a positive number",
             response.data,
         )
+
+    def test_secret_key_comes_from_environment(self):
+        """Configured secret keys override the generated development key."""
+        with patch.dict(os.environ, {"SECRET_KEY": "test-secret"}):
+            importlib.reload(app)
+            self.assertEqual(app.app.config["SECRET_KEY"], "test-secret")
+        importlib.reload(app)
 
     def test_add_items_updates_stock(self):
         """Items can be added to an existing warehouse."""

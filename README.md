@@ -14,6 +14,7 @@ uv sync --dev
 ## Run the web application
 
 ```bash
+export SECRET_KEY="$(python -c 'import secrets; print(secrets.token_hex(32))')"
 uv run flask --app src/app run
 ```
 
