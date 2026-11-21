@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Warehouse Manager</title>
+  </head>
+  <body>
+    <h1>Warehouse Manager</h1>
+
+    {% for message in get_flashed_messages() %}
+      <p role="alert"><strong>{{ message }}</strong></p>
+    {% endfor %}
+
+    <section>
+      <h2>Create a warehouse</h2>
+      <form action="{{ url_for('create_warehouse') }}" method="post">
+        <label>
+          Name
+          <input name="name" type="text" required>
+        </label>
+        <label>
+          Maximum capacity
+          <input name="capacity" type="number" min="0.01" step="any" required>
+        </label>
+        <button type="submit">Create warehouse</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>Warehouses</h2>
+      {% if warehouses %}
+        {% for id, warehouse in warehouses.items() %}
+          <article>
+            <h3>{{ warehouse.name }}</h3>
+            <p>Capacity: {{ warehouse.stock.tilavuus }}</p>
+            <p>Current stock: {{ warehouse.stock.saldo }}</p>
+            <p>Available space: {{ warehouse.stock.paljonko_mahtuu() }}</p>
+
+            <form action="{{ url_for('add_items', warehouse_id=id) }}" method="post">
+              <label>
+                Amount to add
+                <input name="amount" type="number" min="0.01" step="any" required>
+              </label>
+              <button type="submit">Add items</button>
+            </form>
+
+            <form action="{{ url_for('remove_items', warehouse_id=id) }}" method="post">
+              <label>
+                Amount to remove
+                <input name="amount" type="number" min="0.01" step="any" required>
+              </label>
+              <button type="submit">Remove items</button>
+            </form>
+          </article>
+        {% endfor %}
+      {% else %}
+        <p>No warehouses have been created.</p>
+      {% endif %}
+    </section>
+  </body>
+</html>
